@@ -1,24 +1,19 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    list<int> linkedList;
+int main()
+{
+    list<int> l;
     int value;
-
-    while (cin >> value && value != -1) {
-        linkedList.push_back(value);
+    while (cin >> value && value != -1)
+    {
+        l.push_back(value);
     }
-
-    set<int> uniqueValues(linkedList.begin(), linkedList.end());
-
-    linkedList.clear();
-    for (int val : uniqueValues) {
-        linkedList.push_back(val);
-    }
-
-    for (int val : linkedList) {
+    l.sort();
+    l.unique();
+    for (int val : l)
+    {
         cout << val << " ";
     }
-
     return 0;
 }

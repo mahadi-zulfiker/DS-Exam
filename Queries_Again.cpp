@@ -1,8 +1,8 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 int main() {
-    list<int> doublyLinkedList;
+    list<int> dl;
     int Q;
     cin >> Q;
 
@@ -10,31 +10,43 @@ int main() {
         int X, V;
         cin >> X >> V;
 
-        auto it = doublyLinkedList.begin();
-        bool isValid = true;
-
-        if (X >= 0 && X <= doublyLinkedList.size()) {
-            advance(it, X);
-            doublyLinkedList.insert(it, V);
-        } else {
-            isValid = false;
-        }
-
-        if (isValid) {
-            cout << "L -> ";
-            for (int val : doublyLinkedList) {
-                cout << val << " ";
-            }
-            cout << endl;
-
-            cout << "R -> ";
-            for (auto rit = doublyLinkedList.rbegin(); rit != doublyLinkedList.rend(); ++rit) {
-                cout << *rit << " ";
-            }
-            cout << endl;
-        } else {
+        if (X < 0 || X > dl.size()) {
             cout << "Invalid" << endl;
+            continue;
         }
+
+        int count = 0;
+        bool inserted = false;
+        list<int> tmpL;
+
+        for (int val : dl) {
+            if (count == X) {
+                tmpL.push_back(V);
+                inserted = true;
+            }
+            tmpL.push_back(val);
+            count++;
+        }
+
+        if (!inserted && X == dl.size()) {
+            tmpL.push_back(V);
+        }
+
+        dl = tmpL;
+
+        cout << "L -> ";
+        for (int val : dl) {
+            cout << val << " ";
+        }
+        cout << endl;
+
+        cout << "R -> ";
+        list<int> reverse_dl(dl);
+        reverse(reverse_dl.begin(), reverse_dl.end());
+        for (int val : reverse_dl) {
+            cout << val << " ";
+        }
+        cout << endl;
     }
 
     return 0;
