@@ -1,26 +1,45 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    int t; 
-    cin >> t; // Number of test cases
-    while (t--) {
-        string binaryString;
-        cin >> binaryString;
+int main()
+{
+    int t;
+    cin >> t;
 
-        stack<char> stk;
+    while (t--)
+    {
+        string s;
+        cin >> s;
 
-        for (char ch : binaryString) {
-            // Check for eliminations
-            if (!stk.empty() && ((stk.top() == '0' && ch == '1') || (stk.top() == '1' && ch == '0'))) {
-                stk.pop(); // Eliminate the pair
-            } else {
-                stk.push(ch);
+        stack<char> st;
+
+        for (char c : s)
+        {
+            if (c == '1')
+            {
+                if (!st.empty() && st.top() == '0')
+                {
+                    st.pop();
+                }
+                else
+                {
+                    st.push(c);
+                }
+            }
+            else
+            {
+                st.push(c);
             }
         }
 
-        // If stack is empty, the string is completely eliminated
-        cout << (stk.empty() ? "YES" : "NO") << endl;
+        if (st.empty())
+        {
+            cout << "YES" << endl;
+        }
+        else
+        {
+            cout << "NO" << endl;
+        }
     }
 
     return 0;
