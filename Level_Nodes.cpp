@@ -1,12 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 class Node
 {
 public:
     int val;
-    Node *left;
-    Node *right;
+    Node *left, *right;
 
     Node(int val)
     {
@@ -16,7 +14,7 @@ public:
     }
 };
 
-Node *buildTree(vector<int> &nodes)
+Node *buildTree(const vector<int> &nodes)
 {
     if (nodes.empty() || nodes[0] == -1)
         return NULL;
@@ -31,7 +29,7 @@ Node *buildTree(vector<int> &nodes)
         Node *current = q.front();
         q.pop();
 
-        if (nodes[i] != -1)
+        if (i < nodes.size() && nodes[i] != -1)
         {
             current->left = new Node(nodes[i]);
             q.push(current->left);
@@ -51,7 +49,7 @@ Node *buildTree(vector<int> &nodes)
 
 void printLevel(Node *root, int level)
 {
-    if (!root || level < 0)
+    if (!root)
     {
         cout << "Invalid" << endl;
         return;
@@ -66,16 +64,13 @@ void printLevel(Node *root, int level)
         int size = q.size();
         if (currentLevel == level)
         {
-            bool hasNodes = false;
             for (int i = 0; i < size; i++)
             {
                 Node *node = q.front();
                 q.pop();
-                cout << node->val << " ";
-                hasNodes = true;
+                cout << node->val << (i == size - 1 ? "" : " ");
             }
-            if (hasNodes)
-                cout << endl;
+            cout << endl;
             return;
         }
 
