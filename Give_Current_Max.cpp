@@ -1,67 +1,60 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
+struct Student {
+    string name;
+    int roll;
+    int marks;
 
-class Student{
-    public:
-        string name;
-        int id;
-        int marks;
-    Student(string n, int i, int m) : name(n), id(i), marks(m) {}
+    bool operator<(const Student &other) const {
+        if (marks != other.marks)
+            return marks > other.marks;
+        return roll < other.roll;
+    }
 };
 
-bool compare(const Student& a, const Student& b) {
-    if (a.marks != b.marks)
-        return a.marks > b.marks;
-    return a.id < b.id;
-}
-
-int main(){
-    int N, Q;
+int main() {
+    int N;
     cin >> N;
 
-    vector<Student> students;
-    for(int i = 0; i < N; ++i) {
+    set<Student> students;
+
+    for (int i = 0; i < N; ++i) {
         string name;
-        int id, marks;
-        cin >> name >> id >> marks;
-        students.push_back(Student(name, id, marks));
+        int roll, marks;
+        cin >> name >> roll >> marks;
+        students.insert({name, roll, marks});
     }
 
-    make_heap(students.begin(), students.end(), compare);
-    
+    int Q;
     cin >> Q;
-    while(Q--) {
+
+    for (int i = 0; i < Q; ++i) {
         int command;
         cin >> command;
-        if(command == 0) {
+
+        if (command == 0) {
             string name;
-            int id, marks;
-            cin >> name >> id >> marks;
-            students.push_back(Student(name, id, marks));
-            push_heap(students.begin(), students.end(), compare);
-            if(!students.empty()) {
-                Student maxStudent = students.front();
-                cout << maxStudent.name << " " << maxStudent.id << " " << maxStudent.marks << endl;
+            int roll, marks;
+            cin >> name >> roll >> marks;
+            students.insert({name, roll, marks});
+            if (!students.empty()) {
+                const auto &topStudent = *students.begin();
+                cout << topStudent.name << " " << topStudent.roll << " " << topStudent.marks << endl;
+            }
+        } else if (command == 1) {
+            if (!students.empty()) {
+                const auto &topStudent = *students.begin();
+                cout << topStudent.name << " " << topStudent.roll << " " << topStudent.marks << endl;
             } else {
                 cout << "Empty" << endl;
             }
-        } else if(command == 1) {
-            if(!students.empty()) {
-                Student maxStudent = students.front();
-                cout << maxStudent.name << " " << maxStudent.id << " " << maxStudent.marks << endl;
-            } else {
-                cout << "Empty" << endl;
+        } else if (command == 2) {
+            if (!students.empty()) {
+                students.erase(students.begin());
             }
-        } else if(command == 2) {
-            if(!students.empty()) {
-                pop_heap(students.begin(), students.end(), compare);
-                students.pop_back();
-                if(!students.empty()) {
-                    Student maxStudent = students.front();
-                    cout << maxStudent.name << " " << maxStudent.id << " " << maxStudent.marks << endl;
-                } else {
-                    cout << "Empty" << endl;
-                }
+            if (!students.empty()) {
+                const auto &topStudent = *students.begin();
+                cout << topStudent.name << " " << topStudent.roll << " " << topStudent.marks << endl;
             } else {
                 cout << "Empty" << endl;
             }
