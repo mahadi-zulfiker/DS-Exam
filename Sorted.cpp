@@ -5,29 +5,25 @@ int main(){
     int T;
     cin >> T;
 
-    while(T--){
+    while(T--) {
         int N;
         cin >> N;
 
-        vector<int> A(N);
-        for(int i = 0; i < N; i++){
-            cin >> A[i];
+        set<int> unique_numbers;
+        for(int i = 0; i < N; i++) {
+            int num;
+            cin >> num;
+            unique_numbers.insert(num);
         }
 
-        bool isSorted = true;
-        for(int i = 1; i < N; i++){
-            if(A[i] < A[i - 1]){
-                isSorted = false;
-                break;
-            }
-        }
+        vector<int> sorted_numbers(unique_numbers.begin(), unique_numbers.end());
+        sort(sorted_numbers.begin(), sorted_numbers.end());
 
-        if(isSorted){
-            cout << "YES" << endl;
+        for(int num : sorted_numbers) {
+            cout << num << " ";
         }
-        else{
-            cout << "NO" << endl;
-        }
+        cout << endl;
     }
+
     return 0;
 }
